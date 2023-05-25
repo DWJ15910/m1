@@ -4,13 +4,28 @@
 <%@ page import = "vo.*" %>
 <%@ page import = "java.util.*" %>
 <%
-	int startRow = 0;
+	int currentPage = 1;
+
+	if(request.getParameter("currentPage")!=null){
+		currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		System.out.println("home.currentPage 유효성검사 실패");
+	}
+	
 	int rowPerPage = 10;
+	int startRow = (currentPage-1)*rowPerPage;
+	
+	
+	
 	SubjectDao subjectDao = new SubjectDao();
 	ArrayList<Subject> list = subjectDao.selectSubjectListByPage(startRow, rowPerPage);
 	
 	SubjectDao totalRowDao = new SubjectDao();
 	int row = totalRowDao.selectSubjectCnt();
+	
+	int lastPage = row/rowPerPage;
+	if(row%rowPerPage!=0){
+		lastPage++;
+	}
 %>
 
 <!DOCTYPE html>
@@ -52,6 +67,30 @@
 			%>
 		</table>
 		<a class="btn btn-secondary" href="<%=request.getContextPath() %>/subject/addSubject.jsp">과목추가</a>
+		
+		<!-- 페이징 설정 -->
+		<div style="text-align: center">
+		<%
+			int startPage = ((currentPage-1)/10)*10+1;
+			int endPage = Math.min(startPage+9,lastPage);
+			
+			if(startPage>10){
+		%>
+				<a class="btn btn-secondary" href="<%=request.getContextPath()%>/home.jsp?currentPage=<%=startPage-10%>">이전</a>
+		<%
+			}
+			for(int i = startPage; i<=endPage; i++){				
+		%>
+				<a class="<%=currentPage==i ? "btn btn-primary":"btn btn-secondary"%>" href=""><%=i %></a>
+		<%
+			}
+			if(endPage<lastPage){
+		%>
+				<a class="btn btn-secondary" href="<%=request.getContextPath()%>/home.jsp?currentPage=<%=endPage+1%>">다음</a>
+		<%
+			}
+		%>
+		</div>
 	</div>
 </body>
 </html>
