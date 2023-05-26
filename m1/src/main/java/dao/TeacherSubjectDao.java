@@ -65,16 +65,15 @@ public class TeacherSubjectDao {
 		}
 	
 	// 4) 강사-과목 수정
-		public int update(Teacher teacher) throws Exception {
+		public int update(TeacherSubject teachersubject) throws Exception {
 			DBUtil dbUtil = new DBUtil();
 			Connection conn = dbUtil.getConnection();
 			
 			String updateSql = "UPDATE teacher_subject SET teacher_no=?,subject_no=?,updatedate=now() WHERE teacher_subject_no=?";
 			PreparedStatement updateStmt = conn.prepareStatement(updateSql);
-			updateStmt.setString(1,teacher.getTeacherId());
-			updateStmt.setString(2,teacher.getTeacherName());
-			updateStmt.setString(3,teacher.getTeacherHistory());
-			updateStmt.setInt(4,teacher.getTeacherNo());
+			updateStmt.setInt(1,teachersubject.getTeacherNo());
+			updateStmt.setInt(2,teachersubject.getSubjectNo());
+			updateStmt.setInt(3,teachersubject.getTeacherSubjectNo());
 			int row = updateStmt.executeUpdate();
 			
 			return row ;
