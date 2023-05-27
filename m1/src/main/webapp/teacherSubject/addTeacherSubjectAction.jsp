@@ -3,6 +3,7 @@
 <%@ page import = "util.*" %>
 <%@ page import = "vo.*" %>
 <%@ page import = "java.util.*" %>
+<%@ page import = "java.net.*" %>
 <%
 	// 한글 깨짐 방지
 	request.setCharacterEncoding("utf-8");
@@ -16,8 +17,9 @@
 		||request.getParameter("teacherNo").equals("")
 		||request.getParameter("subjectNo").equals("")){
 		
+		System.out.println("addTeacherSubject Null값 있음");
 		msg="값을 입력해 주시기 바랍니다";
-		response.sendRedirect(request.getContextPath()+"/teacher/teacherList.jsp");
+		response.sendRedirect(request.getHeader("Referer") + "?msg=" + msg);
 		return;
 	}
 	// 받아온 값 넣기
@@ -34,14 +36,14 @@
 	
 	// row값 분기 테스트
 	if(row==1){
-		System.out.println("과정 추가 성공");
-		// 성공시 teacherList로 이동
-		response.sendRedirect(request.getContextPath()+"/teacher/teacherList.jsp");
+		System.out.println("담당과목 추가 성공");
+		msg = URLEncoder.encode("담당과목 추가 성공","utf-8");
+		response.sendRedirect(request.getContextPath()+"/teacher/teacherList.jsp?msg=" + msg);
 		return;
 	}else{
-		System.out.println("과정 추가 실패");
-		// 실패시 이전 페이지 이동
-		response.sendRedirect(request.getHeader("Referer"));
+		System.out.println("담당과목 추가 실패");
+		msg = URLEncoder.encode("담당과목 추가 실패","utf-8");
+		response.sendRedirect(request.getHeader("Referer") + "?msg=" + msg);
 		return;
 	}
 %>

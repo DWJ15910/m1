@@ -16,7 +16,7 @@ public class TeacherSubjectDao {
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
 		
-		String sql = "SELECT teacher_no,teacher_name FROM teacher";
+		String sql = "SELECT teacher_no,teacher_name FROM teacher ORDER BY teacher_name";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		ResultSet rs = stmt.executeQuery();
 		
@@ -49,7 +49,7 @@ public class TeacherSubjectDao {
 		return list2;
 	}
 	
-	// 3) TS테이블에 데이터 추가
+	// 3) 담당과목 테이블 데이터 추가
 	public int addTeacherSubject(TeacherSubject teachersubject) throws Exception {
 		int row = 0;
 		DBUtil dbUtil = new DBUtil();
@@ -78,7 +78,7 @@ public class TeacherSubjectDao {
 			
 			return row ;
 		}
-	// 5) 강사-과목-수정해야하는 리스트페이지 출력
+	// 5) 담당과목 리스트 수정
 		public TeacherSubject selUpdateList(int teacherSubjectNo) throws Exception {
 			TeacherSubject teachersubject = null;
 			DBUtil dbUtil = new DBUtil();

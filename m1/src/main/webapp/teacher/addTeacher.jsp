@@ -6,6 +6,12 @@
 <title>강사 추가</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<style>
+	th{
+		vertical-align: middle;
+		width: 200px;
+	}
+</style>
 </head>
 <body>
 	<!-- 메인메뉴 (가로) -->
@@ -34,7 +40,7 @@
 				<!-- 강사 추가 테이블 폼 -->
 				<table class="table">
 					<tr>
-						<th style="width:200px;">강사 아이디</th>
+						<th>강사 아이디</th>
 						<td><input class="form-control" type ="text" name="teacherId" required="required"></td>
 					</tr>
 					<tr>

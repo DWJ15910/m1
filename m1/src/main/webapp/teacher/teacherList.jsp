@@ -41,14 +41,13 @@
 <head>
 <meta charset="UTF-8">
 <title>강사 리스트</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 	<!-- 메인메뉴 (가로) -->
 	<div>
 		<jsp:include page="/inc/mainmenu.jsp"></jsp:include>
 	</div>
+	
 	<div style ="background-color: grey; height:100%;">
 		<div style="background-color: #FFFFFF; height:800px" class="container">
 		
@@ -79,12 +78,12 @@
 				<%
 					for(HashMap<String,Object> m : list){
 				%>
-				<tr onclick="location.href='<%=request.getContextPath()%>/teacher/teacherOne.jsp?teacherNo=<%=m.get("강사번호")%>'" style="cursor: pointer;">
-					<th><%=m.get("강사번호") %></th>
-					<th><%=(String)m.get("강사아이디") %></th>
-					<th><%=(String)m.get("강사이름") %></th>
-					<th><%=(String)m.get("담당과목") %></th>
-				</tr>
+					<tr onclick="location.href='<%=request.getContextPath()%>/teacher/teacherOne.jsp?teacherNo=<%=m.get("강사번호")%>'" style="cursor: pointer;">
+						<th><%=m.get("강사번호") %></th>
+						<th><%=(String)m.get("강사아이디") %></th>
+						<th><%=(String)m.get("강사이름") %></th>
+						<th><%=(String)m.get("담당과목") %></th>
+					</tr>
 				<%
 					}
 				%>

@@ -32,6 +32,12 @@
 <head>
 <meta charset="UTF-8">
 <title>강사 수정</title>
+<style>
+	th{
+		vertical-align: middle;
+		width: 200px;
+	}
+</style>
 </head>
 <body>
 	<!-- 메인메뉴 (가로) -->
@@ -60,7 +66,7 @@
 				<!-- 강사 수정 테이블 -->
 				<table class="table">
 					<tr>
-						<th style="width:200px;">강사번호</th>
+						<th>강사번호</th>
 						<td><input class="form-control" type="number" name="teacherNo" readonly="readonly" value="<%=teacher.getTeacherNo()%>"></td>
 					</tr>
 					<tr>

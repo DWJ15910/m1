@@ -6,27 +6,56 @@
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<style>
+	th{
+		vertical-align: middle;
+		width: 200px;
+	}
+</style>
 </head>
 <body>
-	<div class="container">
-		<h1>과목 추가</h1>
-		<form action = "<%=request.getContextPath() %>/subject/addSubjectAction.jsp">
-			<table class="table">
-				<tr>
-					<td>과목 이름</td>
-					<td><input class="form-control" type ="text" name="subjectName"></td>
-				</tr>
-				<tr>
-					<td>과목 시간</td>
-					<td><input class="form-control" type ="number" name="subjectTime"></td>
-				</tr>
-				<tr>
-					<td colspan="2">
-						<button class="btn btn-secondary" type="submit">전송</button>
-					</td>
-				</tr>
-			</table>
-		</form>
+	<!-- 메인메뉴 (가로) -->
+	<div>
+		<jsp:include page="/inc/mainmenu.jsp"></jsp:include>
+	</div>
+	
+	<div style ="background-color: grey; height:100%;">
+		<div style="background-color: #FFFFFF; height:800px" class="container">
+			<form action = "<%=request.getContextPath() %>/subject/addSubjectAction.jsp">
+			
+				<!-- 과목 추가 리스트 제목 -->
+				<h1 style="height: 100px; display: flex; align-items: center;">과목 추가</h1>
+				
+				<!-- 메시지 출력 -->
+				<div style="color: red;">
+					<%
+						if(request.getParameter("msg") != null){
+					%>
+							<div><%=request.getParameter("msg") %></div>
+					<%
+						}
+					%>
+				</div>
+				
+				<!-- 과목 추가 테이블 -->
+				<table class="table">
+					<tr>
+						<th>과목 이름</th>
+						<td><input class="form-control" type ="text" name="subjectName" required="required"></td>
+					</tr>
+					<tr>
+						<th>과목 시간</th>
+						<td><input class="form-control" type ="number" name="subjectTime" required="required"></td>
+					</tr>
+				</table>
+				<button style="float:right;" class="btn btn-secondary" type="submit">추가</button>
+			</form>
+		</div><!-- /container -->
+	</div><!-- /grey -->
+	
+	<!-- copyright -->
+	<div>
+		<jsp:include page="/inc/copyright.jsp"></jsp:include>
 	</div>
 </body>
 </html>
