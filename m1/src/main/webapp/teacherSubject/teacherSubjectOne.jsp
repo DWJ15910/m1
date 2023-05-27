@@ -29,7 +29,9 @@
 		%>
 			<tr>
 				<th><%=m.get("과정번호") %></th>
-				<td><a href="<%=request.getContextPath()%>/teacherSubject/modifyTeacherSubject.jsp?teacherSubjectNo=<%=m.get("과정번호") %>"><%=m.get("과목이름") %></a></td>
+				<th><%=m.get("과목이름") %></th>
+				<td><a href="<%=request.getContextPath()%>/teacherSubject/modifyTeacherSubject.jsp?teacherSubjectNo=<%=m.get("과정번호") %>">수정</a></td>
+				<td><a href="<%=request.getContextPath()%>/teacherSubject/removeTeacherSubjectAction.jsp?teacherSubjectNo=<%=m.get("과정번호") %>">삭제</a></td>
 			</tr>
 		<%
 			}

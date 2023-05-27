@@ -11,7 +11,7 @@ import vo.*;
 
 public class TeacherSubjectDao {
 	
-	//강사 리스트만 출력
+	// 1) 강사 리스트 출력
 	public ArrayList<HashMap<String,Object>> selTeacherCnt() throws Exception{
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
@@ -30,7 +30,7 @@ public class TeacherSubjectDao {
 		return list;
 	}
 	
-	//과목 리스트 출력
+	// 2) 과목 리스트 출력
 	public ArrayList<HashMap<String,Object>> setSubjectCnt() throws Exception{
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
@@ -49,7 +49,7 @@ public class TeacherSubjectDao {
 		return list2;
 	}
 	
-	//강사에 과목추가
+	// 3) TS테이블에 데이터 추가
 	public int addTeacherSubject(TeacherSubject teachersubject) throws Exception {
 		int row = 0;
 		DBUtil dbUtil = new DBUtil();
@@ -65,15 +65,15 @@ public class TeacherSubjectDao {
 		}
 	
 	// 4) 강사-과목 수정
-		public int update(TeacherSubject teachersubject) throws Exception {
+		public int updateTeacherSubject(TeacherSubject ts) throws Exception {
 			DBUtil dbUtil = new DBUtil();
 			Connection conn = dbUtil.getConnection();
 			
 			String updateSql = "UPDATE teacher_subject SET teacher_no=?,subject_no=?,updatedate=now() WHERE teacher_subject_no=?";
 			PreparedStatement updateStmt = conn.prepareStatement(updateSql);
-			updateStmt.setInt(1,teachersubject.getTeacherNo());
-			updateStmt.setInt(2,teachersubject.getSubjectNo());
-			updateStmt.setInt(3,teachersubject.getTeacherSubjectNo());
+			updateStmt.setInt(1,ts.getTeacherNo());
+			updateStmt.setInt(2,ts.getSubjectNo());
+			updateStmt.setInt(3,ts.getTeacherSubjectNo());
 			int row = updateStmt.executeUpdate();
 			
 			return row ;
@@ -135,5 +135,18 @@ public class TeacherSubjectDao {
 				list.add(m);
 			}
 			return list;
+		}
+		
+	// 8) TS 테이블 삭제
+		public int removeTS(int teacherSubjectNo) throws Exception {
+			DBUtil dbUtil = new DBUtil();
+			Connection conn = dbUtil.getConnection();
+			
+			String sql = "DELETE FROM teacher_subject WHERE teacher_subject_no = ?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, teacherSubjectNo);
+			int row = stmt.executeUpdate();
+			
+			return row;
 		}
 }

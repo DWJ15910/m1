@@ -25,8 +25,9 @@
 	ts.setTeacherNo(teacherNo);
 	ts.setSubjectNo(subjectNo);
 	
+	//TeacherSubjectDao 4번 강사-과목 수정 사용
 	TeacherSubjectDao updateTsDao = new TeacherSubjectDao();
-	int row = updateTsDao.update(teacherSubjectNo);
+	int row = updateTsDao.updateTeacherSubject(ts);
 	
 	if(row==1){
 		System.out.println("강사 변경 성공");
