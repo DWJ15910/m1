@@ -39,16 +39,28 @@ public class SubjectDao {
 	// 2) 과목추가
 	public int insertSubject(Subject subject) throws Exception {
 		int row = 0;
+		int cnt = 0;
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
 		
-		String insertSubjectSql = "INSERT INTO subject (subject_name,subject_time,createdate,updatedate) VALUES (?,?,now(),now())";
-		PreparedStatement insertSubjectStmt = conn.prepareStatement(insertSubjectSql);
-		insertSubjectStmt.setString(1,subject.getSubjectName());
-		insertSubjectStmt.setInt(2,subject.getSubjectTime());
-		row = insertSubjectStmt.executeUpdate();
-		
-		return row;
+		String sql = "SELECT count(*) FROM subject WHERE subject_name = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1,subject.getSubjectName());
+		ResultSet rs = stmt.executeQuery();
+		if(rs.next()) {
+			cnt = rs.getInt(1);
+		}
+		if(cnt==0) {
+			String insertSubjectSql = "INSERT INTO subject (subject_name,subject_time,createdate,updatedate) VALUES (?,?,now(),now())";
+			PreparedStatement insertSubjectStmt = conn.prepareStatement(insertSubjectSql);
+			insertSubjectStmt.setString(1,subject.getSubjectName());
+			insertSubjectStmt.setInt(2,subject.getSubjectTime());
+			row = insertSubjectStmt.executeUpdate();
+			
+			return row;
+		} else {
+			return 0;
+		}
 	}
 	// 3) 과목삭제
 	public int deleteSubject(int subjectNo) throws Exception {

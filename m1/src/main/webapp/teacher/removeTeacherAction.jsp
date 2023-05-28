@@ -23,7 +23,7 @@
 	// 값 받아오기
 	int teacherNo = Integer.parseInt(request.getParameter("teacherNo"));
 	
-	// TeacherDao 클래스 5) 강사 삭제 사용
+	// TeacherDao 클래스 6) 강사 삭제 사용
 	TeacherDao removeTeacher = new TeacherDao();
 	int row = removeTeacher.deleteTeacher(teacherNo);
 	

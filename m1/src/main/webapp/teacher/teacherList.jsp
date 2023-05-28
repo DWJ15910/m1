@@ -16,11 +16,11 @@
 	//시작 행의 번호
 	int startRow = (currentPage-1)*rowPerPage;
 
-	//강사 리스트 출력
+	// TeacherDao 1번 메서드사용
 	TeacherDao teacherDao = new TeacherDao();
 	ArrayList<HashMap<String,Object>> list = teacherDao.selectTeacherListByPage(startRow, rowPerPage);
 	
-	//강사 리스트 총 행의 수
+	// TeacherDao 2번 메서드사용
 	TeacherDao totalRowDao = new TeacherDao();
 	int totalRow = totalRowDao.selectTeacherCount();
 	

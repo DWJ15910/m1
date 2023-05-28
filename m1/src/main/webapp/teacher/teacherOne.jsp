@@ -20,7 +20,7 @@
 	// 값 받아오기
 	int teacherNo = Integer.parseInt(request.getParameter("teacherNo"));
 
-	// TeacherDao 클래스 3) 강사 상세보기 메서드 사용
+	// TeacherDao 클래스 4) 강사 상세보기 메서드 사용
 	TeacherDao teacherone = new TeacherDao();
 	Teacher teacher = teacherone.selectTeacherOne(teacherNo);
 %>

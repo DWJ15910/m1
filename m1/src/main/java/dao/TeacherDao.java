@@ -7,7 +7,9 @@ import util.DBUtil;
 import vo.*;
 
 public class TeacherDao {
-	// 1) 강사리스트 출력
+	// 1) 강사리스트와 담당과목 출력
+	// teacher 테이블을 기준으로 teacher_subject 테이블에 없어도 나오도록 설정
+	// 담당과목이 없을 경우 "없음" 출력
 	public ArrayList<HashMap<String,Object>> selectTeacherListByPage(int beginRow, int rowPerPage) throws Exception{
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
@@ -30,7 +32,7 @@ public class TeacherDao {
 		return list;
 	}
 	
-	// 2) 토탈행 출력
+	// 2) 강사 테이블 전체 행의 수 출력
 	public int selectTeacherCount() throws Exception {
 		int row = 0;
 		DBUtil dbUtil = new DBUtil();
@@ -47,7 +49,7 @@ public class TeacherDao {
 		return row;
 	}
 	
-	// 2) 강사추가
+	// 3) 강사추가
 	public int addTeacher(Teacher teacher) throws Exception {
 		int row = 0;
 		DBUtil dbUtil = new DBUtil();
@@ -63,7 +65,7 @@ public class TeacherDao {
 			return row;
 		}
 	
-	// 3) 강사 상세보기
+	// 4) 강사 상세보기
 	public Teacher selectTeacherOne(int teacherNo) throws Exception {
 		Teacher teacher = null;
 		DBUtil dbUtil = new DBUtil();
@@ -87,7 +89,7 @@ public class TeacherDao {
 		return teacher;
 	}
 
-	// 4) 강사 수정
+	// 5) 강사 수정
 	public int updateTeacher(Teacher teacher) throws Exception {
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
@@ -103,7 +105,7 @@ public class TeacherDao {
 		return row ;
 	}
 	
-	// 5) 강사 삭제
+	// 6) 강사 삭제
 	public int deleteTeacher(int teacherNo) throws Exception {
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();

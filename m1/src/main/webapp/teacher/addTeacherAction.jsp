@@ -34,7 +34,7 @@
 	teacher.setTeacherId(teacherId);
 	teacher.setTeacherName(teacherName);
 	teacher.setTeacherHistory(teacherHistory);
-	// TeacherDao 클래스 2) 강사추가 메서드 사용
+	// TeacherDao 클래스 3) 강사추가 메서드 사용
 	TeacherDao addTeacher = new TeacherDao();
 	int row = addTeacher.addTeacher(teacher);
 	

@@ -38,7 +38,7 @@
 	teacher.setTeacherId(teacherId);
 	teacher.setTeacherName(teacherName);
 	teacher.setTeacherHistory(teacherHistory);
-	// TeacherDao 클래스에 4) 강사 수정 사용
+	// TeacherDao 클래스에 5) 강사 수정 사용
 	TeacherDao updateTeacherDao = new TeacherDao();
 	int row = updateTeacherDao.updateTeacher(teacher);
 	

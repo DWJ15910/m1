@@ -51,54 +51,68 @@ public class TeacherSubjectDao {
 	
 	// 3) 담당과목 테이블 데이터 추가
 	public int addTeacherSubject(TeacherSubject teachersubject) throws Exception {
+		int cnt = 0;
 		int row = 0;
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
 		
-		String addTeacherSubjectSql = "INSERT INTO teacher_subject (teacher_no,subject_no,createdate,updatedate) VALUES (?,?,now(),now())";
+		String sql = "SELECT COUNT(*) FROM teacher_subject WHERE teacher_no = ? AND subject_no = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1,teachersubject.getTeacherNo());
+		stmt.setInt(2,teachersubject.getSubjectNo());
+		ResultSet rs = stmt.executeQuery();
+		if(rs.next()) {
+			cnt = rs.getInt(1);
+			System.out.println("중복된 담당과목-->" + cnt);
+		}
+		if(cnt==0) {
+			String addTeacherSubjectSql = "INSERT INTO teacher_subject (teacher_no,subject_no,createdate,updatedate) VALUES (?,?,now(),now())";
 			PreparedStatement addTeacherSubjectStmt = conn.prepareStatement(addTeacherSubjectSql);
 			addTeacherSubjectStmt.setInt(1,teachersubject.getTeacherNo());
 			addTeacherSubjectStmt.setInt(2,teachersubject.getSubjectNo());
 			row = addTeacherSubjectStmt.executeUpdate();
 			
 			return row;
+		}else {
+			return 0;
 		}
+	}
 	
 	// 4) 강사-과목 수정
-		public int updateTeacherSubject(TeacherSubject ts) throws Exception {
-			DBUtil dbUtil = new DBUtil();
-			Connection conn = dbUtil.getConnection();
-			
-			String updateSql = "UPDATE teacher_subject SET teacher_no=?,subject_no=?,updatedate=now() WHERE teacher_subject_no=?";
-			PreparedStatement updateStmt = conn.prepareStatement(updateSql);
-			updateStmt.setInt(1,ts.getTeacherNo());
-			updateStmt.setInt(2,ts.getSubjectNo());
-			updateStmt.setInt(3,ts.getTeacherSubjectNo());
-			int row = updateStmt.executeUpdate();
-			
-			return row ;
-		}
+	public int updateTeacherSubject(TeacherSubject ts) throws Exception {
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		
+		String updateSql = "UPDATE teacher_subject SET teacher_no=?,subject_no=?,updatedate=now() WHERE teacher_subject_no=?";
+		PreparedStatement updateStmt = conn.prepareStatement(updateSql);
+		updateStmt.setInt(1,ts.getTeacherNo());
+		updateStmt.setInt(2,ts.getSubjectNo());
+		updateStmt.setInt(3,ts.getTeacherSubjectNo());
+		int row = updateStmt.executeUpdate();
+		
+		return row ;
+	}
 	// 5) 담당과목 리스트 수정
-		public TeacherSubject selUpdateList(int teacherSubjectNo) throws Exception {
-			TeacherSubject teachersubject = null;
-			DBUtil dbUtil = new DBUtil();
-			Connection conn = dbUtil.getConnection();
-			
-			String selUpdateListSql = "SELECT teacher_subject_no,teacher_no,subject_no,createdate,updatedate FROM teacher_subject WHERE teacher_subject_no = ?";
-			PreparedStatement selUpdateListStmt = conn.prepareStatement(selUpdateListSql);
-			selUpdateListStmt.setInt(1,teacherSubjectNo);
-			ResultSet selUpdateListRs = selUpdateListStmt.executeQuery();
-			
-			if(selUpdateListRs.next()) {
-				teachersubject = new TeacherSubject();
-				teachersubject.setTeacherSubjectNo(selUpdateListRs.getInt("teacher_subject_no"));
-				teachersubject.setTeacherNo(selUpdateListRs.getInt("teacher_no"));
-				teachersubject.setSubjectNo(selUpdateListRs.getInt("subject_no"));
-				teachersubject.setCreatedate(selUpdateListRs.getString("createdate"));
-				teachersubject.setUpdatedate(selUpdateListRs.getString("updatedate"));
-			}
-			return teachersubject;
+	public TeacherSubject selUpdateList(int teacherSubjectNo) throws Exception {
+		TeacherSubject teachersubject = null;
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		
+		String selUpdateListSql = "SELECT teacher_subject_no,teacher_no,subject_no,createdate,updatedate FROM teacher_subject WHERE teacher_subject_no = ?";
+		PreparedStatement selUpdateListStmt = conn.prepareStatement(selUpdateListSql);
+		selUpdateListStmt.setInt(1,teacherSubjectNo);
+		ResultSet selUpdateListRs = selUpdateListStmt.executeQuery();
+		
+		if(selUpdateListRs.next()) {
+			teachersubject = new TeacherSubject();
+			teachersubject.setTeacherSubjectNo(selUpdateListRs.getInt("teacher_subject_no"));
+			teachersubject.setTeacherNo(selUpdateListRs.getInt("teacher_no"));
+			teachersubject.setSubjectNo(selUpdateListRs.getInt("subject_no"));
+			teachersubject.setCreatedate(selUpdateListRs.getString("createdate"));
+			teachersubject.setUpdatedate(selUpdateListRs.getString("updatedate"));
 		}
+		return teachersubject;
+	}
 	// 6) 강사-과목 리스트 나옴
 		public ArrayList<HashMap<String,Object>> selTeacherSubject(int teacherNo) throws Exception{
 			DBUtil dbUtil = new DBUtil();
