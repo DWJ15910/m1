@@ -14,7 +14,7 @@ public class TeacherDao {
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
 		
-		String sql = "SELECT t.teacher_no, t.teacher_id,t.teacher_name,IFNULL(GROUP_CONCAT(s.subject_name),'없음') 담당과목 FROM teacher t LEFT OUTER JOIN teacher_subject ts ON t.teacher_no = ts.teacher_no LEFT OUTER JOIN subject s ON ts.subject_no = s.subject_no GROUP BY t.teacher_no,t.teacher_id,t.teacher_name limit ?,?";
+		String sql = "SELECT t.teacher_no, t.teacher_id,t.teacher_name,IFNULL(GROUP_CONCAT(s.subject_name),'') tsubject FROM teacher t LEFT OUTER JOIN teacher_subject ts ON t.teacher_no = ts.teacher_no LEFT OUTER JOIN subject s ON ts.subject_no = s.subject_no GROUP BY t.teacher_no,t.teacher_id,t.teacher_name limit ?,?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setInt(1, beginRow);
 		stmt.setInt(2, rowPerPage);
@@ -26,7 +26,7 @@ public class TeacherDao {
 			m.put("강사번호",rs.getInt("t.teacher_no"));
 			m.put("강사아이디",rs.getString("t.teacher_id"));
 			m.put("강사이름",rs.getString("t.teacher_name"));
-			m.put("담당과목",rs.getString("담당과목"));
+			m.put("담당과목",rs.getString("tsubject"));
 			list.add(m);
 		}
 		return list;
@@ -71,7 +71,7 @@ public class TeacherDao {
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
 		
-		String oneSql = "SELECT t.teacher_no, t.teacher_id,t.teacher_name,t.teacher_history,t.createdate,t.updatedate,ifnull(GROUP_CONCAT(s.subject_name),'없음') 담당과목 FROM teacher t LEFT OUTER JOIN teacher_subject ts ON t.teacher_no = ts.teacher_no LEFT OUTER JOIN subject s ON ts.subject_no = s.subject_no WHERE t.teacher_no = ?";
+		String oneSql = "SELECT t.teacher_no, t.teacher_id,t.teacher_name,t.teacher_history,t.createdate,t.updatedate,ifnull(GROUP_CONCAT(s.subject_name),'') tsubject FROM teacher t LEFT OUTER JOIN teacher_subject ts ON t.teacher_no = ts.teacher_no LEFT OUTER JOIN subject s ON ts.subject_no = s.subject_no WHERE t.teacher_no = ?";
 		PreparedStatement oneStmt = conn.prepareStatement(oneSql);
 		oneStmt.setInt(1,teacherNo);
 		ResultSet oneRs = oneStmt.executeQuery();
@@ -84,7 +84,7 @@ public class TeacherDao {
 			teacher.setTeacherHistory(oneRs.getString("t.teacher_history"));
 			teacher.setCreatedate(oneRs.getString("t.createdate"));
 			teacher.setUpdatedate(oneRs.getString("t.updatedate"));
-			teacher.setSubject(oneRs.getString("담당과목"));
+			teacher.setSubject(oneRs.getString("tsubject"));
 		}
 		return teacher;
 	}
